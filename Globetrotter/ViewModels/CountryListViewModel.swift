@@ -8,6 +8,12 @@
 import Combine
 import SwiftUI
 
+/*
+ We currently load the information when the app starts, but don't account for the
+ lack of connectivity. The user is able to pull down and refresh.
+
+ This can be done by using NWPathMonitor.
+ */
 final class CountryListViewModel: ObservableObject {
     @Published var state: FetchingState = .loading
     @Published var countries: [CountryWrapper] = []
@@ -19,6 +25,8 @@ final class CountryListViewModel: ObservableObject {
         countryFetcher = dataLoader.fetcher()
     }
 
+    // Load countries, and cancels the previous request by releasing the cancellable
+    // of that request.
     func loadCountries() {
         cancellable = countryFetcher
             .handleEvents(receiveSubscription: { [weak self] _ in

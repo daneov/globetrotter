@@ -11,7 +11,7 @@ import SwiftUI
 struct GlobetrotterApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CountryListView(viewModel: CompositionRoot.countryListViewModel)
         }
     }
 }

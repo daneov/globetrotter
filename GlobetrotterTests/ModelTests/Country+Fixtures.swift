@@ -9,8 +9,14 @@ import Foundation
 @testable import Globetrotter
 
 extension Globetrotter.Country {
-    static func fixture(name: String = "") -> Self {
-        return .init(name: .init(commonName: name))
+    static func fixture(
+        name: String = "",
+        identifier: String = "",
+    ) -> Self {
+        return .init(
+            name: .init(commonName: name),
+            cca2: identifier
+        )
     }
 }
 
