@@ -16,7 +16,17 @@ import SwiftUI
  */
 final class CountryListViewModel: ObservableObject {
     @Published var state: FetchingState = .loading
+    @Published var searchText: String = ""
     @Published var countries: [CountryWrapper] = []
+
+    // Takes the search query into account to determine which
+    // countries should be displayed
+    var displayedCountries: [CountryWrapper] {
+        if searchText.isEmpty {
+            return countries
+        }
+        return countries.filter { $0.name.contains(searchText) }
+    }
 
     private let countryFetcher: AnyPublisher<[Country], any Error>
     private var cancellable: AnyCancellable?

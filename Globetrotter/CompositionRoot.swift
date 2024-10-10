@@ -7,6 +7,12 @@
 import Foundation
 
 enum CompositionRoot {
+    static var countryDetailViewModel: (_ country: CountryWrapper) -> CountryDetailViewModel {
+        return { (country: CountryWrapper) in
+            CountryDetailViewModel(country: country)
+        }
+    }
+
     static var countryListViewModel: CountryListViewModel {
         CountryListViewModel(dataLoader: countryDataLoader)
     }

@@ -12,10 +12,20 @@ extension Globetrotter.Country {
     static func fixture(
         name: String = "",
         identifier: String = "",
+        capital: String = "",
+        population: UInt = 0,
+        area: Double = 0,
+        flag: String = "🇸🇪"
     ) -> Self {
         return .init(
             name: .init(commonName: name),
-            cca2: identifier
+            capital: [capital],
+            population: population,
+            area: area,
+            cca2: identifier,
+            flag: flag,
+            flags: [:],
+            currencies: [:]
         )
     }
 }

@@ -34,6 +34,30 @@ struct CountryListViewModelTests {
         let result = try await waitForPublishedValue(viewModel.$countries, expectedValue: expected, timeout: .seconds(1))
         #expect(result == expected)
     }
+
+    @Test mutating func showsCountriesMatchingSearchTerm() async throws {
+        let stubbedValue = [Country.fixture(name: "Sweden"), Country.fixture(name: "Afghanistan")]
+        let dataLoader = MockDataLoader(response: .success(value: stubbedValue))
+
+        let viewModel = CountryListViewModel(dataLoader: dataLoader)
+        viewModel.loadCountries()
+        viewModel.searchText = "S"
+
+        let expected = stubbedValue
+            .map(CountryWrapper.init)
+            .sorted(by: {
+                $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+            })
+
+        _ = try await waitForPublishedValue(viewModel.$countries, expectedValue: expected, timeout: .seconds(1))
+
+        let expectedToBeShown = stubbedValue
+            .filter { $0.name.commonName.contains(viewModel.searchText) }
+            .map(CountryWrapper.init)
+
+        try #require(expectedToBeShown.count > 0)
+        #expect(viewModel.displayedCountries == expectedToBeShown)
+    }
 }
 
 class MockDataLoader: DataLoader {

@@ -21,8 +21,10 @@ struct CountryListView: View {
                         Spacer()
                     }
                 case .completed:
-                    ForEach(viewModel.countries) { country in
-                        Text(country.name)
+                    ForEach(viewModel.displayedCountries) { country in
+                        NavigationLink(value: Route.detail(country)) {
+                            Text(country.name)
+                        }
                     }
                 case let .error(err):
                     Text("Whoops, an error occured!. Error: \(err)")
@@ -33,6 +35,7 @@ struct CountryListView: View {
                 viewModel.state = .loading
                 viewModel.loadCountries()
             }
+            .searchable(text: $viewModel.searchText)
         }
         .navigationTitle("Countries")
         .onAppear {

@@ -11,7 +11,15 @@ import SwiftUI
 struct GlobetrotterApp: App {
     var body: some Scene {
         WindowGroup {
-            CountryListView(viewModel: CompositionRoot.countryListViewModel)
+            NavigationStack {
+                CountryListView(viewModel: CompositionRoot.countryListViewModel)
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case let .detail(country):
+                            CountryDetailView(viewModel: CompositionRoot.countryDetailViewModel(country))
+                        }
+                    }
+            }
         }
     }
 }
