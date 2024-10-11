@@ -23,9 +23,7 @@ to learn a bit more about all the different countries!
 This app uses an MVVM architecture to separate View- from business-logic,
 and leverages a Composition root to define all the dependencies present
 in the application. 
-This allows for easy reference and one location in our
-code that requires the knowledge to construct them.
-knowledge to create those dependencies.
+This allows for easy reference and one location in our code that requires the knowledge on how to construct them.
 
 No UI tests were written due to time-constraints, but a decent level of
 coverage was achieved by means of the new Swift Testing framework.
