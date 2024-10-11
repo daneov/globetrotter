@@ -27,7 +27,21 @@ struct CountryListView: View {
                         }
                     }
                 case let .error(err):
-                    Text("Whoops, an error occured!. Error: \(err)")
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Text("Whoops, an error occured!. Error: \(err)")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.bottom, 5)
+                        Button {
+                            viewModel.loadCountries()
+                        } label: {
+                            HStack {
+                                Image(systemName: "arrow.clockwise.circle")
+                                Text("Try again").padding(.top, 5)
+                            }
+                        }.foregroundStyle(.blue)
+                        Spacer()
+                    }
                 }
             }
             .listStyle(.plain)
